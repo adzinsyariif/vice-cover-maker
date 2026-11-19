@@ -1,85 +1,67 @@
 # Vice Cover Studio
 
-[![make.fun bounty](https://make.fun/badge/gta6-cover-art-01.svg)](https://make.fun/bounty/gta6-cover-art-01)
-[![rank](https://make.fun/badge/gta6-cover-art-01/adzinsyariif/vice-cover-maker/rank.svg)](https://make.fun/bounty/gta6-cover-art-01)
-[![reward](https://make.fun/badge/gta6-cover-art-01/adzinsyariif/vice-cover-maker/reward.svg)](https://make.fun/bounty/gta6-cover-art-01)
+[![Competition](https://make.fun/api/competitions/gta6-cover-art-01/badge.svg)](https://make.fun/bounty/gta6-cover-art-01)
+[![Entries](https://make.fun/api/competitions/gta6-cover-art-01/badge-entries.svg)](https://make.fun/bounty/gta6-cover-art-01)
+[![Submit](https://make.fun/api/users/adzinsyariif/badge-submissions.svg)](https://make.fun/bounty/gta6-cover-art-01)
 
-Vice Cover Studio turns your own photos plus a caption into bold, multi-panel
-cover art in a sunset-and-neon vice style: several photo panels cut apart by
-thick diagonal dividers with heavy off-white borders, a saturated colour
-grade laid over the whole poster, and big condensed caption lettering along
-the foot. It runs entirely offline in the browser — photos are read locally
-and never uploaded — and exports a finished PNG you can post anywhere.
+Vice Cover Studio is an offline cover art maker that turns your own photos
+into a bold multi-panel poster in a palm-city sunset style. Pick photos,
+drop them into slanted panels, choose a colour grade, write your caption,
+and export a print-ready PNG in the size you need. Everything runs locally
+in the browser: your photos are read on your own machine and never
+uploaded anywhere.
 
 ## Features
 
-- **Three panel layouts**, each drawn in a poster and a wide variant chosen
-  by the export aspect: Hero Duo (one hero plus two panels), Hero Trio (one
-  hero plus three) and Diptych (two large panels split by a strong diagonal
-  plus a slim third). Panel edges are derived from shared slanted boundary
-  lines, so the collage tiles perfectly with no gaps.
-- **Four colour grades** — Sunset, Neon, Daylight and Dusk — each combining a
-  photo filter (saturation, contrast, brightness, hue) with layered gradient
-  washes, glow and a vignette.
-- **Your photos or the built-in samples**: five sample photos are bundled, so
-  a first cover is two clicks away; add your own with the file picker
-  (multiple at once) and click any thumbnail to place it in the selected
-  panel, or fill every panel with one photo.
-- **Direct manipulation**: click the poster to select a panel, drag its photo
-  to reframe it, scroll to zoom, or use the Zoom / Nudge X / Nudge Y sliders
-  and the Centre button. Vertical framing anchors toward the top of a photo,
-  so faces survive short, wide panels.
-- **Caption editor**: title and subtitle, set in a heavy condensed display
-  face, auto-fitted to the poster width, with an accent rule and a
-  letter-spaced subtitle in the grade's accent colour.
-- **Empty panels** are filled with a purple-teal placeholder wash, a faint
-  panel number and a palm-frond motif, so a work in progress still looks
-  designed.
+- Three multi-panel layouts, each with a poster and a wide variant:
+  Hero Duo, Hero Trio, and Diptych. Neighbouring panels share the same
+  slanted boundary lines, so the artwork tiles edge to edge with crisp
+  white separators and a framed finish.
+- Bring your own photos with the multi-file picker, or start from the
+  five built-in illustrated samples. Click a photo, then a panel to place
+  it, or use Fill all panels to cycle your photos across the poster.
+- Per-panel framing: zoom and nudge sliders, a Centre button, plus direct
+  manipulation on the poster itself — click to select a panel, drag to
+  move its photo, scroll to zoom it.
+- Four colour grades — Sunset, Neon Nights, Daylight Vice, and Dusk —
+  each with its own photo treatment, layered poster washes, and accent
+  colour for the caption.
+- An editable caption: a letter-spaced subtitle in the grade accent
+  colour above a big auto-fitted title, set over a soft bottom scrim so
+  it stays readable on any photo.
+- Empty panels are designed too, with a grade-tinted gradient, a palm
+  motif, and an ADD PHOTO marker, so a work in progress still looks
+  deliberate.
 
-## Export sizes
+## How to run
 
-- Square — 1080 x 1080
-- Portrait — 1080 x 1350
-- Wide — 1920 x 1080
+No build step and no network are needed. Either open `app/index.html`
+directly in desktop Chrome, or serve the folder with the bundled helper
+from the repository root:
 
-Pick a size in the header, then press **Export PNG**; the file is saved as
-`vice-cover-<width>x<height>.png`.
+    node serve.ts --port 8123
 
-## Run it locally
+and then visit the local address it prints. The app works fully offline
+either way.
 
-```sh
-node serve.ts
-```
+## Exporting
 
-Then open the local page the server prints (it serves the `app/` folder).
-No build step, no dependencies, no network: every script, style, font and
-image the page loads lives under `app/`.
+Use the size switch in the header to choose 1080 x 1080, 1080 x 1350, or
+1920 x 1080, then press Export PNG. The poster is rendered fresh at the
+full chosen resolution on an offscreen canvas and downloaded as a PNG.
+Scripts can do the same through `window.__viceStudio.exportPNG(w, h)`,
+which renders at any requested size and returns a PNG data URL.
 
-To hand the entry in the way the grader runs it:
+A shot mode is built in for taking clean pictures of a finished cover:
+open the app with query parameters such as `?shot=cover` together with
+`layout`, `grade`, `size`, `photos`, `title`, and `subtitle` values, and
+the editor chrome hides so only the poster fills the window.
+`?shot=editor` loads the same scene with the controls visible.
 
-```sh
-mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
-```
+## Credits and license
 
-That copies `app/` and `screenshots/` into `out/` and writes `out/dossier.json`.
+The caption typeface is Anton by Vernon Adams, bundled under `app/fonts/`
+and licensed under the SIL Open Font License 1.1. The built-in sample
+photos are original illustrated scenes made for this project.
 
-## Controls in brief
-
-- **Photos** — add your own, or click a sample chip; click a tray thumbnail
-  to assign it to the selected panel; "Fill all panels" repeats the last
-  photo everywhere.
-- **Panels** — click the poster to select; drag to move the photo, scroll to
-  zoom; sliders and Centre do the same job precisely.
-- **Layout / Grade** — three layout presets and four grade presets, applied
-  instantly.
-- **Caption** — title and subtitle text fields.
-- **Header** — export size segmented control and the Export PNG button. A
-  status line under the poster reports every action.
-
-## Credits
-
-- Sample photos in `app/samples/` were generated for this entry.
-- The display font is **Anton** by Vernon Adams, bundled at
-  `app/fonts/Anton-Regular.ttf` and used under the **SIL Open Font License
-  1.1**.
-- All code was written for this entry; no libraries are used.
+Vice Cover Studio is released under the MIT License; see `LICENSE`.
