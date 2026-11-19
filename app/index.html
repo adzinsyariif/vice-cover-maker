@@ -1,88 +1,83 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Vice Cover Studio</title>
-<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="topbar">
-  <div class="brand">
-    <h1>Vice Cover Studio</h1>
-    <p class="tagline">Your photos, cut into bold multi-panel cover art with a sunset neon grade.</p>
-  </div>
-  <div class="top-actions">
-    <div class="segmented" role="group" aria-label="Export size">
-      <button type="button" class="size-btn" data-w="1080" data-h="1080">Square 1080 x 1080</button>
-      <button type="button" class="size-btn" data-w="1080" data-h="1350">Portrait 1080 x 1350</button>
-      <button type="button" class="size-btn" data-w="1920" data-h="1080">Wide 1920 x 1080</button>
+<div id="app">
+  <header id="topbar">
+    <div class="brand">
+      <span class="brand-mark">VC</span>
+      <span class="brand-name">Vice Cover Studio</span>
+    </div>
+    <div class="seg" id="sizeSeg" role="group" aria-label="Export size">
+      <button type="button" data-size="1080x1080">1080 x 1080</button>
+      <button type="button" data-size="1080x1350">1080 x 1350</button>
+      <button type="button" data-size="1920x1080" class="active">1920 x 1080</button>
     </div>
     <button type="button" id="exportBtn" class="export-btn">Export PNG</button>
+  </header>
+  <div id="workspace">
+    <aside id="rail">
+      <section>
+        <h2>Photos</h2>
+        <label class="file-btn" for="fileInput">Add your photos</label>
+        <input type="file" id="fileInput" accept="image/*" multiple hidden>
+        <div class="sample-row" id="sampleRow"></div>
+        <div id="tray" class="tray"></div>
+        <button type="button" id="fillBtn" class="wide-btn">Fill all panels</button>
+      </section>
+      <section>
+        <h2>Layout</h2>
+        <div class="seg col" id="layoutSeg">
+          <button type="button" data-layout="hero-duo" class="active">Hero Duo</button>
+          <button type="button" data-layout="hero-trio">Hero Trio</button>
+          <button type="button" data-layout="diptych">Diptych</button>
+        </div>
+      </section>
+      <section>
+        <h2>Colour grade</h2>
+        <div class="seg col" id="gradeSeg">
+          <button type="button" data-grade="sunset" class="active">Sunset</button>
+          <button type="button" data-grade="neon">Neon Nights</button>
+          <button type="button" data-grade="daylight">Daylight Vice</button>
+          <button type="button" data-grade="dusk">Dusk</button>
+        </div>
+      </section>
+      <section>
+        <h2>Caption</h2>
+        <label class="field">Title
+          <input type="text" id="titleInput" value="SUNSET HEIST" maxlength="42">
+        </label>
+        <label class="field">Subtitle
+          <input type="text" id="subtitleInput" value="PALM CITY STORIES" maxlength="48">
+        </label>
+      </section>
+      <section>
+        <h2>Selected panel</h2>
+        <p id="panelLabel" class="panel-label">Panel 1</p>
+        <label class="field">Zoom
+          <input type="range" id="zoomRange" min="1" max="3" step="0.01" value="1">
+        </label>
+        <label class="field">Move X
+          <input type="range" id="xRange" min="-0.5" max="0.5" step="0.005" value="0">
+        </label>
+        <label class="field">Move Y
+          <input type="range" id="yRange" min="-0.5" max="0.5" step="0.005" value="0">
+        </label>
+        <button type="button" id="centreBtn" class="wide-btn">Centre photo</button>
+        <p class="hint">Tip: click a photo, then a panel. Drag a photo on the poster to move it, scroll to zoom it.</p>
+      </section>
+    </aside>
+    <main id="stage">
+      <canvas id="poster" width="960" height="540"></canvas>
+      <p id="status">Add photos, pick a layout, then export your cover.</p>
+    </main>
   </div>
-</header>
-
-<main class="workspace">
-  <aside class="rail">
-    <section class="rail-block">
-      <h2>Photos</h2>
-      <label class="file-label" for="photoInput">Add your photos</label>
-      <input id="photoInput" type="file" accept="image/*" multiple>
-      <p class="hint">Samples, ready to use:</p>
-      <div class="samples" id="samples">
-        <button type="button" class="sample-chip" data-sample="convertible"><img src="./samples/convertible.jpg" alt="Convertible sample photo"><span>Convertible</span></button>
-        <button type="button" class="sample-chip" data-sample="yacht"><img src="./samples/yacht.jpg" alt="Yacht sample photo"><span>Yacht</span></button>
-        <button type="button" class="sample-chip" data-sample="beach"><img src="./samples/beach.jpg" alt="Beach sample photo"><span>Beach</span></button>
-        <button type="button" class="sample-chip" data-sample="pier"><img src="./samples/pier.jpg" alt="Pier sample photo"><span>Pier</span></button>
-        <button type="button" class="sample-chip" data-sample="boulevard"><img src="./samples/boulevard.jpg" alt="Boulevard sample photo"><span>Boulevard</span></button>
-      </div>
-      <div class="tray" id="tray" aria-label="Loaded photos"></div>
-      <button type="button" id="fillAll" class="ghost-btn">Fill all panels with last photo</button>
-    </section>
-
-    <section class="rail-block">
-      <h2>Panels</h2>
-      <p class="hint">Click the poster to select a panel. Drag its photo to move it, scroll to zoom.</p>
-      <label class="slider-row">Zoom <input id="zoom" type="range" min="1" max="2.6" step="0.01" value="1"><span id="zoomVal">1.00x</span></label>
-      <label class="slider-row">Nudge X <input id="nudgeX" type="range" min="-0.45" max="0.45" step="0.005" value="0"><span id="nudgeXVal">0</span></label>
-      <label class="slider-row">Nudge Y <input id="nudgeY" type="range" min="-0.45" max="0.45" step="0.005" value="0"><span id="nudgeYVal">0</span></label>
-      <button type="button" id="centre" class="ghost-btn">Centre photo</button>
-    </section>
-
-    <section class="rail-block">
-      <h2>Layout</h2>
-      <div class="btn-row" id="layoutRow">
-        <button type="button" class="pick-btn layout-btn" data-layout="hero-duo">Hero Duo</button>
-        <button type="button" class="pick-btn layout-btn" data-layout="hero-trio">Hero Trio</button>
-        <button type="button" class="pick-btn layout-btn" data-layout="diptych">Diptych</button>
-      </div>
-    </section>
-
-    <section class="rail-block">
-      <h2>Grade</h2>
-      <div class="btn-grid" id="gradeRow">
-        <button type="button" class="pick-btn grade-btn" data-grade="sunset"><span class="swatch"></span>Sunset</button>
-        <button type="button" class="pick-btn grade-btn" data-grade="neon"><span class="swatch"></span>Neon</button>
-        <button type="button" class="pick-btn grade-btn" data-grade="daylight"><span class="swatch"></span>Daylight</button>
-        <button type="button" class="pick-btn grade-btn" data-grade="dusk"><span class="swatch"></span>Dusk</button>
-      </div>
-    </section>
-
-    <section class="rail-block">
-      <h2>Caption</h2>
-      <label class="field">Title <input id="titleInput" type="text" maxlength="42" value="SUNSET HEIST"></label>
-      <label class="field">Subtitle <input id="subtitleInput" type="text" maxlength="42" value="PALM CITY STORIES"></label>
-    </section>
-  </aside>
-
-  <section class="stage" id="stage">
-    <div class="canvas-wrap" id="canvasWrap">
-      <canvas id="poster" width="1080" height="1080" aria-label="Your cover poster"></canvas>
-    </div>
-    <p id="status" class="status" role="status">Pick a sample photo, then click a panel.</p>
-  </section>
-</main>
-
-<script type="module" src="./src/main.js"></script>
+</div>
+<script type="module" src="src/main.js"></script>
 </body>
 </html>
