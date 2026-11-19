@@ -93,7 +93,10 @@ function drawPanel(ctx, poly, panel, index, grade, W, H) {
     const dw = img.naturalWidth * scale;
     const dh = img.naturalHeight * scale;
     const dx = bx + (bw - dw) / 2 + (panel.dx || 0) * bw;
-    const dy = by + (bh - dh) / 2 + (panel.dy || 0) * bh;
+    /* Vertical cover-fit anchors toward the top (factor 0.24, not
+       the centred 0.5), so heads near the top of a photo survive
+       being cropped into a short, wide panel. */
+    const dy = by + (bh - dh) * 0.24 + (panel.dy || 0) * bh;
     ctx.filter = grade.filter;
     ctx.drawImage(img, dx, dy, dw, dh);
     ctx.filter = 'none';

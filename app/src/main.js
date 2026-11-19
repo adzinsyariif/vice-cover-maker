@@ -483,6 +483,7 @@ async function init() {
     syncPickButtons();
     syncSliders();
     redraw();
+    setStatus(`Editing "${state.title}" — ${gradeById(state.gradeId).label} grade, ${canvas.width} x ${canvas.height} export.`);
     markShotReady();
     return;
   }
