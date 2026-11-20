@@ -1,12 +1,357 @@
-html, body { margin: 0; height: 100%; background: #f2f0f4; color: #1d1b22; font: 15px/1.4 system-ui, sans-serif; }
-.app { display: flex; gap: 32px; align-items: center; justify-content: center; height: 100%; padding: 24px; box-sizing: border-box; }
-.controls { display: flex; flex-direction: column; gap: 14px; width: 280px; }
-.controls h1 { margin: 0; font-size: 28px; }
-.controls p { margin: 0; color: #5c5866; }
-label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; }
-input[type=text] { font: inherit; padding: 8px; border: 1px solid #c9c4d1; border-radius: 6px; }
-button { font: inherit; font-weight: 700; padding: 10px; border: 0; border-radius: 6px; background: #1d1b22; color: #fff; cursor: pointer; }
-canvas { width: min(70vh, 60vw); height: min(70vh, 60vw); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); }
-body.shot-cover .controls { display: none; }
-body.shot-cover .app { padding: 0; }
-body.shot-cover canvas { width: 100vw; height: 100vh; box-shadow: none; }
+@font-face {
+  font-family: "Anton";
+  src: url("./fonts/Anton-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #0b0716;
+  color: #f4eefc;
+  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  min-height: 100vh;
+}
+
+h1, h2 {
+  font-family: Anton, "Arial Narrow", sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 22px;
+  background: linear-gradient(90deg, #170b31, #241047 55%, #0d2b3d);
+  border-bottom: 3px solid #ff5da2;
+}
+
+.brand h1 {
+  font-size: 30px;
+  color: #ffffff;
+  text-shadow: 2px 2px 0 #ff2f96, -1px -1px 0 #37f4e4;
+}
+
+.tagline {
+  margin: 4px 0 0;
+  color: #cdbcf0;
+  font-size: 13px;
+}
+
+.top-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.segmented {
+  display: flex;
+  border: 1px solid #5b4390;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.seg {
+  background: #1b1036;
+  color: #d9cdf7;
+  border: 0;
+  padding: 9px 13px;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.seg.active {
+  background: #37f4e4;
+  color: #0b0716;
+  font-weight: 700;
+}
+
+.export-btn {
+  background: #ff2f96;
+  color: #ffffff;
+  border: 0;
+  border-radius: 999px;
+  padding: 11px 22px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(255, 47, 150, 0.45);
+}
+
+.export-btn:hover {
+  background: #ff5da2;
+}
+
+.layout {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 18px 22px 26px;
+}
+
+.rail {
+  width: 292px;
+  flex: 0 0 292px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.card {
+  background: #17102b;
+  border: 1px solid #34245c;
+  border-radius: 14px;
+  padding: 14px 15px 16px;
+}
+
+.card h2 {
+  font-size: 17px;
+  color: #37f4e4;
+  margin-bottom: 10px;
+}
+
+.hint {
+  color: #a99bd6;
+  font-size: 12.5px;
+  line-height: 1.45;
+  margin: 6px 0 10px;
+}
+
+.file-label {
+  display: inline-block;
+  background: #2a1a52;
+  border: 1px dashed #7a5fd0;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 9px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+#fileInput {
+  display: block;
+  margin-top: 8px;
+  color: #a99bd6;
+  font-size: 12px;
+  max-width: 100%;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 10px;
+}
+
+.chip {
+  width: 46px;
+  height: 46px;
+  border-radius: 9px;
+  border: 2px solid #34245c;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  background: #241547;
+}
+
+.chip img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.chip:hover {
+  border-color: #ff5da2;
+}
+
+.tray {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 10px;
+  min-height: 4px;
+}
+
+.thumb {
+  width: 46px;
+  height: 46px;
+  border-radius: 9px;
+  border: 2px solid #34245c;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  background: #241547;
+}
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.thumb.used {
+  border-color: #37f4e4;
+}
+
+.ghost-btn {
+  background: transparent;
+  color: #37f4e4;
+  border: 1px solid #37f4e4;
+  border-radius: 999px;
+  padding: 8px 15px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.ghost-btn:hover {
+  background: rgba(55, 244, 228, 0.12);
+}
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+  color: #d9cdf7;
+  margin-bottom: 9px;
+}
+
+.slider-row input {
+  flex: 1;
+  accent-color: #ff2f96;
+}
+
+.preset-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.preset {
+  background: #241547;
+  color: #f4eefc;
+  border: 2px solid #34245c;
+  border-radius: 10px;
+  padding: 9px 13px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.preset.active {
+  border-color: #ff5da2;
+  background: #3a1160;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.field {
+  display: block;
+  font-size: 13px;
+  color: #d9cdf7;
+  margin-bottom: 10px;
+}
+
+.field input {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+  background: #0f0a22;
+  border: 1px solid #4a3480;
+  border-radius: 9px;
+  color: #ffffff;
+  padding: 9px 11px;
+  font-size: 14px;
+}
+
+.stage {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.canvas-wrap {
+  background: #05030c;
+  border: 1px solid #34245c;
+  border-radius: 16px;
+  padding: 14px;
+  max-width: 100%;
+}
+
+#poster {
+  display: block;
+  max-width: min(72vh, 100%);
+  max-height: 72vh;
+  width: auto;
+  height: auto;
+  cursor: pointer;
+  touch-action: none;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6);
+}
+
+.status {
+  color: #a99bd6;
+  font-size: 13.5px;
+  margin: 0;
+  min-height: 18px;
+}
+
+body.shot-cover {
+  background: #000000;
+}
+
+body.shot-cover .chrome {
+  display: none;
+}
+
+body.shot-cover .layout {
+  padding: 0;
+  display: block;
+}
+
+body.shot-cover .stage {
+  display: block;
+}
+
+body.shot-cover .canvas-wrap {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: #000000;
+}
+
+body.shot-cover #poster {
+  max-width: none;
+  max-height: none;
+  box-shadow: none;
+}
+
+@media (max-width: 860px) {
+  .layout {
+    flex-direction: column;
+  }
+  .rail {
+    width: 100%;
+    flex: none;
+  }
+}

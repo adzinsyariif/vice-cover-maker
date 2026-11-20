@@ -1,22 +1,75 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cover Snap</title>
+<title>Vice Cover Studio</title>
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<main class="app">
-  <section class="controls">
-    <h1>Cover Snap</h1>
-    <p>A photo and a caption, made into a square cover.</p>
-    <label>Photo <input id="photo" type="file" accept="image/*"></label>
-    <label>Caption <input id="caption" type="text" maxlength="40" value="Sunset Heist"></label>
-    <button id="export" type="button">Export PNG 1080 x 1080</button>
-    <p id="status" role="status"></p>
+<header class="chrome topbar">
+  <div class="brand">
+    <h1>Vice Cover Studio</h1>
+    <p class="tagline">Turn your own photos into bold multi-panel cover art.</p>
+  </div>
+  <div class="top-actions">
+    <div class="segmented" id="sizeControl" role="group" aria-label="Export size">
+      <button type="button" data-w="1080" data-h="1080" class="seg active">1080 x 1080 Square</button>
+      <button type="button" data-w="1080" data-h="1350" class="seg">1080 x 1350 Portrait</button>
+      <button type="button" data-w="1920" data-h="1080" class="seg">1920 x 1080 Wide</button>
+    </div>
+    <button type="button" id="exportBtn" class="export-btn">Export PNG</button>
+  </div>
+</header>
+<main class="layout">
+  <aside class="chrome rail">
+    <section class="card">
+      <h2>Photos</h2>
+      <label class="file-label" for="fileInput">Add your photos</label>
+      <input type="file" id="fileInput" accept="image/*" multiple>
+      <p class="hint">Samples, click one to fill the selected panel:</p>
+      <div class="chips" id="sampleChips"></div>
+      <div class="tray" id="tray"></div>
+      <button type="button" id="fillAllBtn" class="ghost-btn">Fill all panels</button>
+    </section>
+    <section class="card">
+      <h2>Panels</h2>
+      <p class="hint">Click the poster to select a panel. Drag its photo to move it, scroll to zoom.</p>
+      <label class="slider-row">Zoom
+        <input type="range" id="zoomSlider" min="1" max="3" step="0.01" value="1">
+      </label>
+      <label class="slider-row">Nudge X
+        <input type="range" id="dxSlider" min="-0.4" max="0.4" step="0.005" value="0">
+      </label>
+      <label class="slider-row">Nudge Y
+        <input type="range" id="dySlider" min="-0.4" max="0.4" step="0.005" value="0">
+      </label>
+      <button type="button" id="centreBtn" class="ghost-btn">Centre</button>
+    </section>
+    <section class="card">
+      <h2>Layout</h2>
+      <div class="preset-row" id="layoutRow"></div>
+    </section>
+    <section class="card">
+      <h2>Grade</h2>
+      <div class="preset-row" id="gradeRow"></div>
+    </section>
+    <section class="card">
+      <h2>Caption</h2>
+      <label class="field">Title
+        <input type="text" id="titleInput" value="SUNSET HEIST" maxlength="42">
+      </label>
+      <label class="field">Subtitle
+        <input type="text" id="subtitleInput" value="PALM CITY STORIES" maxlength="48">
+      </label>
+    </section>
+  </aside>
+  <section class="stage">
+    <div class="canvas-wrap">
+      <canvas id="poster" width="1080" height="1080"></canvas>
+    </div>
+    <p class="chrome status" id="statusLine">Pick a sample photo, then Export PNG.</p>
   </section>
-  <canvas id="cover" width="1080" height="1080" aria-label="The cover"></canvas>
 </main>
 <script type="module" src="./src/main.js"></script>
 </body>

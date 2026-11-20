@@ -1,5 +1,1 @@
-[
-  { "name": "1-cover.jpg", "query": "?shot=cover&photo=pier&caption=Sunset%20Heist", "w": 1080, "h": 1080 },
-  { "name": "2-editor.jpg", "query": "?shot=editor&photo=boulevard&caption=Boulevard%20Queen", "w": 1280, "h": 720 },
-  { "name": "3-cover.jpg", "query": "?shot=cover&photo=boulevard&caption=Boulevard%20Queen", "w": 1080, "h": 1080 }
-]
+[{"h":720,"name":"1-cover.jpg","query":"?shot=cover&layout=hero-duo&grade=sunset&size=1920x1080&photos=convertible,yacht,beach&title=SUNSET%20HEIST&subtitle=PALM%20CITY%20STORIES","w":1280},{"h":720,"name":"2-editor.jpg","query":"?shot=editor&layout=hero-duo&grade=sunset&size=1080x1080&photos=convertible,yacht,beach&title=SUNSET%20HEIST&subtitle=PALM%20CITY%20STORIES","w":1280},{"h":1280,"name":"3-portrait.jpg","query":"?shot=cover&layout=hero-trio&grade=neon&size=1080x1350&photos=beach,convertible,yacht,pier&title=NEON%20SHORES&subtitle=VICE%20AFTER%20DARK","w":1024},{"h":1080,"name":"4-square.jpg","query":"?shot=cover&layout=diptych&grade=daylight&size=1080x1080&photos=pier,boulevard,convertible&title=PALM%20CITY&subtitle=SUMMER%20RUN","w":1080}]
