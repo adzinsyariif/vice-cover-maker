@@ -67,8 +67,8 @@ function heroTrioWide(W, H) {
 function diptychPoster(W, H) {
   const stripLeft = [0, H * 0.82];
   const stripRight = [W, H * 0.78];
-  const diagTop = [W * 0.22, 0];
-  const diagFoot = pointOn(stripLeft, stripRight, 0.72);
+  const diagTop = [W * 0.3, 0];
+  const diagFoot = pointOn(stripLeft, stripRight, 0.62);
   const leftPanel = [[0, 0], diagTop, diagFoot, stripLeft];
   const rightPanel = [diagTop, [W, 0], stripRight, diagFoot];
   const strip = [stripLeft, stripRight, [W, H], [0, H]];

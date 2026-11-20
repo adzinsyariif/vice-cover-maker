@@ -127,7 +127,17 @@ function drawCaption(ctx, state, grade, W, H) {
   const subtitle = (state.subtitle || "").trim().toUpperCase();
   const margin = W * 0.055;
   const maxWidth = W * 0.92;
-  const base = H - margin * 0.9;
+  const base = H - margin * 1.05;
+  if (title || subtitle) {
+    const scrimH = H * 0.34;
+    const scrim = ctx.createLinearGradient(0, H - scrimH, 0, H);
+    scrim.addColorStop(0, "rgba(8, 3, 20, 0)");
+    scrim.addColorStop(1, "rgba(8, 3, 20, 0.55)");
+    ctx.save();
+    ctx.fillStyle = scrim;
+    ctx.fillRect(0, H - scrimH, W, scrimH);
+    ctx.restore();
+  }
   if (title) {
     const size = fitFontSize(ctx, title, maxWidth, Math.round(H * 0.115));
     ctx.save();
