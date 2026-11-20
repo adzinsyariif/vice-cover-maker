@@ -1,23 +1,72 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cover Snap</title>
-<link rel="stylesheet" href="./style.css">
+<title>Vice Cover Studio</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main class="app">
-  <section class="controls">
-    <h1>Cover Snap</h1>
-    <p>A photo and a caption, made into a square cover.</p>
-    <label>Photo <input id="photo" type="file" accept="image/*"></label>
-    <label>Caption <input id="caption" type="text" maxlength="40" value="Sunset Heist"></label>
-    <button id="export" type="button">Export PNG 1080 x 1080</button>
-    <p id="status" role="status"></p>
+<header class="topbar">
+  <div class="brand">
+    <h1>Vice Cover Studio</h1>
+    <p class="tagline">Turn your own photos into bold multi-panel cover art.</p>
+  </div>
+  <div class="top-actions">
+    <div id="size-buttons" class="segmented" role="group" aria-label="Export size"></div>
+    <button id="export-btn" type="button" class="export">Export PNG</button>
+  </div>
+</header>
+<main class="shell">
+  <aside class="rail">
+    <section class="card">
+      <h2>Photos</h2>
+      <label class="file-label">Add your photos
+        <input id="file-input" type="file" accept="image/*" multiple>
+      </label>
+      <p class="hint">Sample photos</p>
+      <div id="sample-chips" class="chips"></div>
+      <div id="tray" class="tray"></div>
+      <button id="fill-all" type="button" class="wide-btn">Fill all panels</button>
+    </section>
+    <section class="card">
+      <h2>Panels</h2>
+      <p class="hint">Click the poster to select a panel, drag to move its photo, scroll to zoom.</p>
+      <p id="selected-label" class="selected-label">Panel 1 selected</p>
+      <label class="slider">Zoom
+        <input id="zoom" type="range" min="100" max="300" value="100">
+      </label>
+      <label class="slider">Nudge X
+        <input id="nudge-x" type="range" min="-50" max="50" value="0">
+      </label>
+      <label class="slider">Nudge Y
+        <input id="nudge-y" type="range" min="-50" max="50" value="0">
+      </label>
+      <button id="centre-btn" type="button" class="wide-btn">Centre</button>
+    </section>
+    <section class="card">
+      <h2>Layout</h2>
+      <div id="layout-buttons" class="presets"></div>
+    </section>
+    <section class="card">
+      <h2>Grade</h2>
+      <div id="grade-buttons" class="presets"></div>
+    </section>
+    <section class="card">
+      <h2>Caption</h2>
+      <label class="field">Title
+        <input id="title-input" type="text" value="SUNSET HEIST" maxlength="40">
+      </label>
+      <label class="field">Subtitle
+        <input id="subtitle-input" type="text" value="PALM CITY STORIES" maxlength="48">
+      </label>
+    </section>
+  </aside>
+  <section class="stage">
+    <canvas id="poster" width="1920" height="1080"></canvas>
+    <p id="status" class="status">Panel 1 selected - pick a photo</p>
   </section>
-  <canvas id="cover" width="1080" height="1080" aria-label="The cover"></canvas>
 </main>
-<script type="module" src="./src/main.js"></script>
+<script type="module" src="src/main.js"></script>
 </body>
 </html>
